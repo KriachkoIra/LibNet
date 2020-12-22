@@ -1,4 +1,4 @@
-# LitNet
+# LibNet
 
 This is a book social network.
 
@@ -8,7 +8,7 @@ To install:
 
 1. Clone repo
 
-2. `cd LitNet`
+2. `cd LibNet`
 
 3. `pip3 install -r requirements.txt`
 
