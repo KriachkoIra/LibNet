@@ -1,11 +1,12 @@
 <!doctype html>
 <html>
     <head>
-        <title>Назва - Головна Сторінка</title>
+        <title>LibNet - Головна Сторінка</title>
         <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/css/style.css">
+       <script src="https://kit.fontawesome.com/999afff8dc.js" crossorigin="anonymous"></script>
     </head>
     
     <body>
@@ -20,41 +21,71 @@
             }
             
             .main-page-div{
-                display: flex; 
-                align-items: center; 
-                justify-content: space-around;
                 padding: 50px;
                 background-color: white;
                 width: 500px;
                 margin: auto;
-                height: 300px;
-                margin-top: 25vh;
+                height: 400px;
+                margin-top: 20vh;
                 border-radius: 40px;
+            }
+            
+            .flex-contain{
+                display: flex; 
+                align-items: center; 
+                justify-content: space-around;
             }
             </style>
         
+        
         <div class="main-page-div">
+            <p style="font-size: 30px; font-weight: 700; text-align: center;">LibNet</p>
+            <p style="font-size: 20px; font-weight: 500; text-align: center; margin-top: -15px; color: grey;">Літературна соціальна мережа</p>
+            <div class="flex-contain">
+        
+                <div style="margin-top: 70px; text-align: center;">
+        <i class="fas fa-book" style="font-size: 50px; margin-bottom: 15px;"></i>
         {% if g.user %}
-        <form class="add-class-button">
+        <form class="add-class-button" >
+            
             <button class="add-class-button" formaction="{{ url_for('books') }}">Мої книги</button>
         </form>
         {% else %}
         
-        <button class="popup add-class-button" onclick="myFunction()">Мої книги
+        <button class="popup add-class-button" 
+                onclick="myFunction()">Мої книги
         <span class="popuptext" id="myPopup">Увійдіть в аккант.</span>
         </button>
 
         {% endif %}
-        
-        <form class="add-class-button">
-            <button class="add-class-button" formaction="{{ url_for('posts') }}">Мої пости</button>
-        </form>
+           </div> 
+                
+        <div style="margin-top: 70px; text-align: center;">
+            <i class="fas fa-mail-bulk" style="font-size: 50px; margin-bottom: 15px;"></i>
+        {% if g.user %}
             
+        <form class="add-class-button" >
+            <button class="add-class-button" formaction="{{ url_for('posts') }}">Мої публікації</button>
+        </form>
+        {% else %}
+        
+        <button class="popup2 add-class-button" onclick="myFunction2()">Мої публікації
+        <span class="popuptext2" id="myPopup2">Увійдіть в аккант.</span>
+        </button>
+
+        {% endif %}
+        </div>
+        </div>
         </div>
         
         <script>
             function myFunction() {
             var popup = document.getElementById("myPopup");
+            popup.classList.toggle("show");
+            }
+            
+            function myFunction2() {
+            var popup = document.getElementById("myPopup2");
             popup.classList.toggle("show");
             }
         </script>

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="pt-br">
     <head>
-        <title>Назва - регістрація</title>
+        <title>LibNet - Моя Сторінка</title>
   <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="../static/css/style.css">
@@ -66,12 +66,12 @@
 <div style="max-width: 100%;">
 <div class="user-photo">
   <img class="user-avatar"  src="{{ g.user.avatar }}" >
-  <p style="margin: auto; text-align: center; font-size: 24px; font-weight: 500;">{{ g.user.username }} <i class="fa fa-pencil" style="font-size: 14px; color: darkgrey; margin-left: 3px;"></i></p> 
+  <p style="margin: auto; text-align: center; font-size: 24px; font-weight: 500;">{{ g.user.username }} <!--<i class="fa fa-pencil" style="font-size: 14px; color: darkgrey; margin-left: 3px;"></i> --> </p> 
     <hr style="margin-top: 3px;">
     <div class="info">
         <div class="stat">
             <div class="label">Пости</div>
-            <div class="num">3</div>
+            <div class="num">{{ n_posts }}</div>
           </div>
         <div class="stat">
             <div class="label">Підписники</div>
@@ -86,10 +86,11 @@
 <form method="post">
 <div class="row">
     <div class="col-lg-12">
-        <div class="jumbotron text-center" style="background-color: transparent;">
+        <div class="jumbotron text-center" style="background-color: transparent; padding: 0; margin-left: 80px; margin-top: 10px;">
             <div class="row">
                 <div class="input-group mt-3">
                     <div class="custom-file">
+                        <p style="margin-right: 10px; font-size: 18px; font-weight: 500; padding-top: 10px;">Створіть аватарку: </p>
                         <input type="file" accept="image/*" id="cover_image">
                     </div>
                 </div>
