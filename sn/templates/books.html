@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Назва - Мої Книги</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="../static/css/style.css">
+    </head>
+    
+    <body>
+        {% include 'navbar.html' %}
+        
+    <style>
+        
+        .tab-content{
+           display: block;
+        width: 100%;
+       }
+        
+        .students{
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .li-book{
+            margin-left: 50px;
+            margin-bottom: 10px;
+        }
+        
+        .book:hover{
+            text-decoration: none;
+        }
+        
+    </style>    
+        
+    <div class="books-container">
+    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical" style="display: flex; width: 220px; margin-right: 10px;">
+      <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true" >Хочу прочитати</a>
+      <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false" style="display: grid;">Прочитані</a>
+      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Читаю зараз</a>
+    <form>
+    <button class="nav-link button" formaction="{{ url_for('add_book') }}">Додати книгу</button>
+    </form>
+    </div>
+        
+    <div class="tab-content" id="v-pills-tabContent">
+      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">  
+        {% if g.user %}
+          
+          {% if will_read.first() %}
+            <ol class="students" style="list-style: none; padding: 0px;">
+                {% for book in will_read %}
+                    <li class="li-book"><a class="book"  href="{{ url_for('book', id=book.id) }}">
+                        {% if book.image %}
+                        <img class="book-img"  src="{{ book.image }}">
+                        {% else %}
+                        <img class="book-img"  src="../static/img/book.svg">
+                        {% endif %}
+                        <p class="book-ref">{{ book.name }}</p></a>
+                    </li>
+                {% endfor %}
+            </ol>
+          {% else %}
+            <div>У Вас поки що немає книг, які Ви хочете прочитати.</div>
+          {% endif %} 
+          
+        {% else %}
+          <div>Увійдіть в аккаунт, щоб побачити свої книги.</div>
+        {% endif %} 
+          
+        </div>
+      <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+        
+        {% if g.user %}
+          
+          {% if read.first() %}
+            <ol class="students" style="list-style: none; padding: 0px;">
+                {% for book in read %}
+                    <li class="li-book"><a class="book"  href="{{ url_for('book', id=book.id) }}">
+                        {% if book.image %}
+                        <img class="book-img"  src="{{ book.image }}">
+                        {% else %}
+                        <img class="book-img"  src="../static/img/book.svg">
+                        {% endif %}
+                        <p class="book-ref">{{ book.name }}</p></a>
+                    </li>
+                {% endfor %}
+            </ol>
+          {% else %}
+            <div>У Вас поки що немає книг, які Ви прочитали.</div>
+          {% endif %} 
+          
+        {% else %}
+          <div>Увійдіть в аккаунт, щоб побачити свої книги.</div>
+        {% endif %}
+        
+        </div>
+      <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+        
+        {% if g.user %}
+          
+          {% if reading.first() %}
+            <ol class="students" style="list-style: none; padding: 0px;">
+                {% for book in reading %}
+                    <li class="li-book"><a class="book" href="{{ url_for('book', id=book.id) }}">
+                        {% if book.image %}
+                        <img class="book-img"  src="{{ book.image }}">
+                        {% else %}
+                        <img class="book-img"  src="../static/img/book.svg">
+                        {% endif %} 
+                        <p class="book-ref">{{ book.name }}</p></a>
+                    </li>
+                {% endfor %}
+            </ol>
+          {% else %}
+            <div>У Вас поки що немає книг, які Ви читаєте.</div>
+          {% endif %} 
+          
+        {% else %}
+          <div>Увійдіть в аккаунт, щоб побачити свої книги.</div>
+        {% endif %}
+        
+        </div>
+    </div>
+    </div>
+        
+    </body>
+</html>

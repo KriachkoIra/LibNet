@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <title>Назва - регістрація</title>
+  <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css" />
+        
+    </head>
+    
+    <body>
+        {% include 'navbar.html' %}
+            <style>
+                .content{
+                width: 100%;
+                }
+                
+                body{
+                background-image: url("../static/img/17.png");;
+                background-attachment: fixed;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+            </style>
+        <form method="post" class="registration registration-form">
+            <div class="content">
+            <input class = "input-value" type="text" name="username" id="username" placeholder="Нікнейм" value="{{ request.form['username'] }}" required>
+                <br>
+            <input class = "input-value" type="text" name="name" id="name" placeholder="Прізвище та ім'я" value="{{ request.form['name'] }}" required>
+                <br>
+                <p style="font-size: 15px; font-weight: 500; color: grey;  margin: auto; margin-top: -17px; margin-bottom: 3px;">Дата народження</p>
+            <input class = "input-value" type="date" name="birth_date" id="birth_date" placeholder="Дата народження" value="{{ request.form['birth_date'] }}" required>
+                <br>
+            <input class = "input-value" type="email" name="email" id="email" placeholder="Адреса електронної пошти" value="{{ request.form['email'] }}" required>
+                <br>
+            <input class = "input-value" type="password" name="password" id="password" placeholder="Пароль" value="{{ request.form['password'] }}">
+            
+            {% for message in get_flashed_messages() %}
+            <div class="flash">{{ message }}</div>
+            {% endfor %}
+
+
+                <hr>
+            <input class = "submit-button" type="submit" value="Зберегти">
+                
+            </div>
+        </form>  
+        
+
+    </body>
+</html>

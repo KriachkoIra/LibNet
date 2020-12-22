@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Назва - Вхід</title>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="../static/css/style.css">
+    </head>
+    
+    <body>
+        {% include 'navbar.html' %}
+        <form method="post" class="registration registration-form mini">
+            <style>
+                .content{
+                width: 100%;
+                }
+                
+                body{
+                background-image: url("../static/img/17.png");
+                background-attachment: fixed;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+            </style>
+            <div class="content">
+            <input class = "input-value" type="text" name="username" id="username" placeholder="Нікнейм" value="{{ request.form['username'] }}" required>
+            <br>
+            <input class = "input-value" type="password" name="password" id="password" placeholder="Пароль"  value="{{ request.form['password'] }}">
+            {% for message in get_flashed_messages() %}
+            <div class="flash">{{ message }}</div>
+            {% endfor %}
+                <br>
+            <input class = "submit-button login-submit"  type="submit" value="Увійти">
+            </div>
+        </form>
+    </body>
+</html>

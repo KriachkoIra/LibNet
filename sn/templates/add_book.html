@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Назва - Мої Книги</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="../static/css/style.css">
+    </head>
+    
+    <body>
+        {% include 'navbar.html' %}
+                   <style>
+                .content{
+                width: 100%;
+                }
+                
+                body{
+                background-image: url("../static/img/17.png");;
+                background-attachment: fixed;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+            </style>
+        <form method="post" class="registration registration-form" enctype="multipart/form-data">
+        <div class="content">
+            <input name="name" id="name" class = "input-value" type="text" placeholder="Назва книги" value="{{ request.form['name'] }}" required>
+            <br>
+            <input name="author" id="author" class = "input-value" type="text" placeholder="Автор" value="{{ request.form['author'] }}" required>
+            <br>
+            <input name="genre" id="genre" class = "input-value" type="text" placeholder="Жанр" value="{{ request.form['genre'] }}" required>            
+            <br>
+            <select class="form-control" style="width:70%; margin: auto; border:0; box-shadow:0 0 15px 4px rgba(0,0,0,0.1); margin-bottom: -5px;" id="exampleFormControlSelect2" name="status" value="{{ request.form['status'] }}" required>
+              <option value="0" disabled>Статус</option>
+              <option value="1">Прочитано</option>
+              <option value="2">Хочу прочитати</option>
+              <option value="3">Читаю зараз</option>
+            </select>
+            <br>
+            
+            <style>
+            #input-label {
+              background-color: #2A3A51;
+              color: white;
+              padding: 0.5rem;
+              font-family: sans-serif;
+              border-radius: 8px;
+              cursor: pointer;
+              margin-top: 1rem;
+              width: 185px;
+              font-size: 15px;
+            }
+                
+            #input-label:hover{
+              background-color: #34537b;
+            }
+
+            #file-chosen{
+              margin-left: 0.5rem;
+              font-family: sans-serif;
+              font-size: 16px;
+            }
+            </style>
+            
+            <div style="text-align: center;">                    
+                    
+            <!-- actual upload which is hidden -->
+            <input type="file" name="image" id="image" hidden/>
+
+            <!-- our custom upload button -->
+            <label id= "input-label" for="image" >Оберіть зображення</label>
+
+            <!-- name of file chosen -->
+            <span id="file-chosen" style="color: grey;">Файл не обрано</span>
+            </div>
+            
+            
+            <div class="rate" style="margin-bottom: 8px;">
+            <input type="radio" id="star10" name="star" value="10" />
+            <label for="star10" title="text">10 stars</label>
+            <input type="radio" id="star9" name="star" value="9"/>
+            <label for="star9" title="text">9 stars</label>
+            <input type="radio" id="star8" name="star" value="8"/>
+            <label for="star8" title="text">8 stars</label>
+            <input type="radio" id="star7" name="star" value="7"/>
+            <label for="star7" title="text">7 stars</label>
+            <input type="radio" id="star6" name="star" value="6"/>
+            <label for="star6" title="text">6 starі</label>
+            <input type="radio" id="star5" name="star" value="5" />
+            <label for="star5" title="text">5 stars</label>
+            <input type="radio" id="star4" name="star" value="4"/>
+            <label for="star4" title="text">4 stars</label>
+            <input type="radio" id="star3" name="star" value="3"/>
+            <label for="star3" title="text">3 stars</label>
+            <input type="radio" id="star2" name="star" value="2"/>
+            <label for="star2" title="text">2 stars</label>
+            <input type="radio" id="star1" name="star" value="1"/>
+            <label for="star1" title="text">1 star</label>
+          </div>
+            
+            {% for message in get_flashed_messages() %}
+            <div class="flash">{{ message }}</div>
+            {% endfor %}
+            
+            <input class = "submit-button"  type="submit" value="Зберегти">
+        </div> 
+        </form>
+    
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> 
+        
+    <script>
+    const actualBtn = document.getElementById('image');
+
+    const fileChosen = document.getElementById('file-chosen');
+
+    actualBtn.addEventListener('change', function(){
+      fileChosen.textContent = this.files[0].name
+    })
+    </script>
+        
+    </body>
+</html>

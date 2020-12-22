@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Назва - Мої Книги</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="../static/css/style.css">
+    </head>
+    
+    <body>
+        {% include 'navbar.html' %}
+            <style>
+                body
+                .add-post{
+                    max-width: 1300px;
+                }
+                .editorSheet{
+                    min-height: 100vw;
+                    border: solid; border-width: 0px;
+                    text-align: left; 
+                    background-color: white; 
+                    -webkit-box-shadow: 6px 10px 9px 0px rgba(0, 0, 0, 0.75); 
+                    -moz-box-shadow: 6px 10px 9px 0px rgba(0, 0, 0, 0.75); 
+                    box-shadow: 6px 10px 9px 0px rgba(0, 0, 0, 0.75); 
+                    padding: 15px;
+                }
+            </style>
+        <form method="post" class="add-post">
+            <input name="title" id="title" placeholder="Нікнейм" class = "input-value" type="text" value="{{ request.form['title'] }}" style="width: 100%;"  required>
+            <br>
+            <label style="margin-top: 10px;">Текст посту:</label>
+            <!--
+            <textarea name="body" id="body"  class="input-value textarea" type="text" value="{{ request.form['body'] }}" style="width: 100%; height: 300px; resize: none;" required ></textarea>
+            -->
+            
+            <div id="body" name="body" value="{{ request.form['body'] }}" contenteditable="true" style="height: 50%; width: 100%; border: solid; border-width: 1px; text-align: left;" class="editorSheet"> </div>
+            
+            <br>
+            {% for message in get_flashed_messages() %}
+            <div class="flash">{{ message }}</div>
+            {% endfor %}
+            
+            <input class = "submit-button"  type="submit" value="Зберегти" style="margin: auto; display: block;">
+        </form>
+        
+    </body>
+</html>

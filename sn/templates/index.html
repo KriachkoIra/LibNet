@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Назва - Головна Сторінка</title>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/style.css">
+    </head>
+    
+    <body>
+        {% include 'navbar.html' %}
+        
+        <style>                
+                body{
+                background-image: url("../static/img/17.png");;
+                background-attachment: fixed;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+            
+            .main-page-div{
+                display: flex; 
+                align-items: center; 
+                justify-content: space-around;
+                padding: 50px;
+                background-color: white;
+                width: 500px;
+                margin: auto;
+                height: 300px;
+                margin-top: 25vh;
+                border-radius: 40px;
+            }
+            </style>
+        
+        <div class="main-page-div">
+        {% if g.user %}
+        <form class="add-class-button">
+            <button class="add-class-button" formaction="{{ url_for('books') }}">Мої книги</button>
+        </form>
+        {% else %}
+        
+        <button class="popup add-class-button" onclick="myFunction()">Мої книги
+        <span class="popuptext" id="myPopup">Увійдіть в аккант.</span>
+        </button>
+
+        {% endif %}
+        
+        <form class="add-class-button">
+            <button class="add-class-button" formaction="{{ url_for('posts') }}">Мої пости</button>
+        </form>
+            
+        </div>
+        
+        <script>
+            function myFunction() {
+            var popup = document.getElementById("myPopup");
+            popup.classList.toggle("show");
+            }
+        </script>
+        
+    </body>
+</html>

@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Назва - Головна Сторінка</title>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/style.css">
+        <script src="https://kit.fontawesome.com/999afff8dc.js" crossorigin="anonymous"></script>
+    </head>
+    
+    <body>
+        {% include 'navbar.html' %}
+
+        <style>
+            .book-info{
+                font-size: 18px;
+                display: flex;
+                align-content: center;
+            }
+            
+            .book-ul{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between
+            }
+        
+        </style>
+        <div class="quotes-contain">
+        
+        <div class="book-info">
+            {% if image %}
+                <img class="book-img"  src="{{ image }}" style="margin-right: 20px;">
+                {% else %}
+                <img class="book-img"  src="../static/img/book.svg" style="margin-right: 20px;">
+                {% endif %}
+            <div class="book-ul">
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                <li><b>Назва</b>: {{ name }}</li>
+                {% if author %}    
+                <li><b>Автор</b>: {{ author }}</li>
+                {% endif %}
+                {% if genre %} 
+                <li><b>Жанр</b>: {{ genre }}</li>
+                {% endif %}
+                {% if rating %} 
+                <li><b>Ваша оцінка</b>: {{ rating }}/10</li>
+                {% endif %}
+                </ul>
+            <div class="book-buttons" style="display: flex; font-size: 20px;">
+                <form method="post">
+                <input name = "b_id" id = "b_id" style="display: none;" value = "{{ book.id }}"> 
+                
+                    {%  if book.is_favorite %}
+                <button formaction="{{ url_for('add_book_to_favorites', id=book.id) }}" style="border: 0; background-color: transparent;"><i class="fas fa-star"></i></button>
+                    
+                    {%  else %}
+                <button formaction="{{ url_for('add_book_to_favorites', id=book.id) }}" style="border: 0; background-color: transparent;"><i class="far fa-star"></i></button>
+                    {%  endif %}
+                    <a style="margin-right: 10px;"><i class="far fa-edit"></i></a>
+                <button formaction="{{ url_for('delete_book', id=book.id) }}" style="border: 0; background-color: transparent;"><i class="far fa-trash-alt"></i></button>
+                </form>
+            </div>  
+                
+            </div>
+        </div>   
+        <hr>
+        <button id="add-quote-button" class="add-quote-button" onclick="myFunction()"><i class="fas fa-plus" style="margin-right: 5px; font-size: 0.9rem;"></i>Додати цитату
+        </button>
+            
+        <style>
+            button:active, button:focus {
+                outline: none;
+            }
+            button::-moz-focus-inner {
+                border: 0;
+            }
+        </style>
+        
+        <div id="add-quote-div" class="add-quote-div">
+            <form method="post">
+            <textarea name="quote_text" id="quote_text" class="input-value textarea" type="text" value="{{ request.form['quote_text'] }}" maxlength="1000" required style="margin: 0; margin-bottom: 10px"></textarea>
+
+            <input class = "submit-button" type="submit" value="Зберегти">
+            </form>
+        </div>
+        
+        <script>
+            function myFunction() {
+            var popup = document.getElementById("add-quote-div");
+            popup.classList.toggle("show");
+            }
+        </script>
+        
+        
+        {% if quotes.first() %}
+        <ol class="quotes">
+            {% for q in quotes %}
+            <hr>
+                <li class="quote-div"><div id = "quote-text-div">{{ q.text }}</div>
+                    <div id="contain" style="display: flex; align-items: center; justify-content: center;">
+                    <div id="min-contain">
+                    <button class="edit-delete-button" ><i class="far fa-edit"></i>
+                    Змінити</button>
+                    <form method="post">
+                    <input name = "q_id" id = "q_id" style="display:none;" value = "{{q.id}}">
+                    <button class="edit-delete-button" formaction="{{ url_for('delete_quote', id=q.book_id) }}"><i class="far fa-trash-alt" style="margin-right: 6px;"></i>Видалити</button>
+                    </form>
+                    </div>
+                    </div>
+                </li>
+            
+            {% endfor %}
+        </ol>
+        {% else %}
+            <hr>
+            <p>Ви поки що не додавали цитати.</p>
+        {% endif %}
+            
+    </div>
+        
+    </body>
+</html>

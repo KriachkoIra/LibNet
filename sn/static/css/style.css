@@ -1,0 +1,319 @@
+.content, .add-book-form{
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    font-size: 18px;
+    font-weight: 500;
+    outline: none;
+}
+
+button:active, button:focus {
+  outline: none;
+}
+button::-moz-focus-inner {
+  border: 0;
+}
+
+input:focus, textarea:focus, select:focus{
+    outline: none;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+a:active, a:hover{
+    text-decoration: none;
+}
+
+.book-ref{
+    text-decoration: none;
+    color: black;
+}
+
+.book-ref:hover{
+    color: #6e6e6e;
+    text-decoration: none;
+}
+
+.submit-button{
+    width: 170px;
+    height: 37px;
+    border-radius: 7px;
+    margin: auto;
+    border: none;
+    outline: none;
+    background-color: #2A3A51;
+    color: white;
+}
+
+.submit-button:hover{
+    background-color: #34537b;
+}
+
+.btn.btn-outline-success.my-2.my-sm-0:hover{
+    background-color: #34537b;
+}
+
+.books-container{
+    display: flex; 
+    margin-top: 30px;
+}
+
+.nav.flex-column.nav-pills{
+    margin: 0 100px 0 10px;
+}
+
+.nav-link.button{
+    background-color: transparent;
+    border-color: transparent;
+    cursor: pointer;
+    text-align: left;
+}
+
+.nav-link.button:hover{
+    color: #34537b;
+}
+
+.nav-link{
+    color: black;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #2A3950 !important;
+}
+
+.add-class-button, .edit-delete-button, .add-quote-button{
+    background-color: #2A3A51;
+    color: white;
+    width: 160px;
+    height: 37px;
+    border-radius: 7px;
+    margin: auto;
+    border-color: transparent;
+    margin: 1px 0 1px 0;
+}
+
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.popup .popuptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+}
+
+.popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}
+
+textarea {
+    display: block;
+    resize: none;
+  width:50vw;
+  padding:12px;
+  border-radius:15px;
+  border-width: 2px;
+    border-color: black;
+    outline:none;
+  height:150px;
+}
+
+.add-quote-div{
+    display: none;
+}
+
+.add-quote-div.show{
+    display: block;
+    margin-top: 10px;
+}
+
+.quote-div{
+    display: flex;
+    justify-content: space-between;
+}
+
+.edit-delete-button{
+    width: 100px;
+    height: 28px;
+    font-size: 14px;
+}
+
+.edit-delete-button:hover{
+    background-color: #34537b;
+}
+
+#quote-text-div{
+    text-align: justify;
+    margin-right: 30px;
+}
+
+.quotes-contain{
+    max-width: 80vw;
+    margin: auto;
+    margin-top: 30px;
+}
+
+ol{
+    padding: 0;
+}
+
+.registration.registration-form{
+    background-color: white;
+    display: flex;
+    width: 600px;
+    height: 500px;
+    margin: auto;
+    margin-top: 10vh;
+    border-radius: 40px;
+}
+
+.registration.registration-form.mini{
+    background-color: white;
+    display: flex;
+    width: 550px;
+    height: 350px;
+    margin: auto;
+    margin-top: 20vh;
+    border-radius: 40px;
+}
+
+.input-value{
+    border-radius: 30px;
+    padding: 10px 20px;
+    border:0;
+    box-shadow:0 0 15px 4px rgba(0,0,0,0.1);
+    width: 70%;
+    margin: auto;
+}
+
+.add-post{
+    max-width: 750px;
+    margin: auto;
+    background-color: white;
+    height: 93vh;
+    padding: 5vw 10vw;
+}
+
+.edit-delete-button.delete-post{
+    color: black;
+    background-color: inherit;
+}
+
+.edit-delete-button.delete-post:hover{
+    color: #6e6e6e;
+}
+
+.book-img {
+    width: 200px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.book{
+    text-align: center;
+}
+
+.rate {
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+    text-align: center;
+    margin: auto;
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+
+.flash{
+    margin: auto;
+}
+
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+.rate > input:checked ~ label {
+    color: #ffc700;    
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #deb217;  
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}
+
+::-webkit-scrollbar {
+  width: 13px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.2) inset;
+  background-color: #f9f9fd;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #2a3950, #2a3950);
+}
+
+$custom-file-text: (
+en: "Browse",
+uk: "Обрати"
+);
