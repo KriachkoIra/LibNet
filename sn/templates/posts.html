@@ -13,8 +13,17 @@
         {% include 'navbar.html' %}
          
         {% if g.user %}
+        <style>
         
-        <div style="max-width: 750px; margin: auto;">
+            body{
+                background-image: url("../static/img/17.png");;
+                background-attachment: fixed;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+        </style>
+        
+        <div style="max-width: 1000px; margin: auto; background-color: white; padding-right: 80px; padding-left: 80px; margin-top: 0; min-height: 92vh; padding-top: 10px; padding-bottom: 15px;">
         <form>
         <button formaction="{{ url_for('add_post') }}" id="add-quote-button" class="add-quote-button" style="margin: auto; display: block; margin-top: 10px;"><i class="fas fa-plus" style="margin: 5px; font-size: 0.9rem;"></i>Додати пост</button>
         </form>
@@ -22,7 +31,7 @@
           {% if posts.first() %}
             <ul class="posts" style="padding: 0px;">
                 {% for post in posts|reverse %}
-                <hr>
+                <hr style="border-top: 2px solid #2A3A51">
                     <li class="post" style="padding: 0px; list-style: none;">
                         <div style="display: flex; justify-content: space-between;">
                         <p><b>{{ post.title }}</b></p>
@@ -30,6 +39,12 @@
                     <input name = "p_id" id = "p_id" style="display:none;" value = "{{post.id}}">    
                             
                     <button class="edit-delete-button delete-post" formaction="{{ url_for('delete_post', id=post.id) }}" ><i class="far fa-trash-alt" style="margin-right: 6px;"></i>delete</button>
+                            {%  if post.is_favorite %}
+                <button formaction="{{ url_for('add_post_to_favorites', id=post.id) }}" style="border: 0; background-color: transparent;"><i class="fas fa-star"></i></button>
+                    
+                    {%  else %}
+                <button formaction="{{ url_for('add_post_to_favorites', id=post.id) }}" style="border: 0; background-color: transparent;"><i class="far fa-star"></i></button>
+                    {%  endif %}
                     </form>
                         </div>
                     <p style="text-align: justify;">{{ post.body }}</p>
@@ -47,10 +62,12 @@
             </ul>
         
           {% else %}
+            <hr>
             <div style="margin-top: 20px; text-align: center;">У Вас поки що немає власних публікацій.</div>
           {% endif %} 
           
         {% else %}
+            <hr>
           <div>Увійдіть в аккаунт, щоб побачити свої пости.</div>
         {% endif %} 
             

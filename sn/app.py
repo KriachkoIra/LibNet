@@ -15,7 +15,7 @@ config = {
   };
 
 app = Flask(__name__, instance_relative_config=True)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:\\projects\\book_prog\\mydb.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:\\projects\\LibNet\\mydb.db'
 app.config['SECRET_KEY'] = 'dev'
 
 firebase = pyrebase.initialize_app(config)

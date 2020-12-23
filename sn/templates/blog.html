@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+    <head>
+        <title>LibNet - Публікації</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="../static/css/style.css">
+        <script src="https://kit.fontawesome.com/999afff8dc.js" crossorigin="anonymous"></script>
+    </head>
+    
+    <body>
+        {% include 'navbar.html' %}
+        <style>
+            .post{
+                display: flex;
+            }
+            body{
+                background-image: url("../static/img/17.png");;
+                background-attachment: fixed;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+        </style>
+        <div style="max-width: 1000px; margin: auto; background-color: white; padding-right: 80px; padding-left: 80px; margin-top: 0; min-height: 92vh; padding-top: 10px; padding-bottom: 15px;">
+        <h5 style="text-align: center;">Нещодавні публікації</h5>
+          
+          {% if posts.first() %}
+            <ul class="posts" style="padding: 0px;">
+                {% for post in posts|reverse %}
+                <hr style="border-top: 2px solid #2A3A51">
+                    <li class="post" style="padding: 0px; list-style: none;">
+                        <div style="margin-right: 30px; text-align: center; width: 96px; display: block;">
+                            {% if photo[post.id] %}
+                        <img src="{{ photo[post.id] }}" style="height: 70px; display: inline-block;">
+                            {%  else %}
+                            <i class="far fa-user-circle" style="text-align: center; font-size: 30px; margin: auto;"></i>
+                            {%  endif %}
+                        <p style="text-align: center;">{{ author[post.id] }}</p>
+                            </div>
+                        <div>
+                        <div style="display: flex; justify-content: space-between;">
+                        <p><b>{{ post.title }}</b></p>
+                        <form method="post">
+                    <input name = "p_id" id = "p_id" style="display:none;" value = "{{post.id}}">    
+                        
+                    </form>
+                        </div>
+                    <p style="text-align: justify;">{{ post.body }}</p>
+                    
+                            </div>
+                    </li>
+                
+                <form method="post" style="display: flex; justify-content: space-between;">
+                    <input name = "p_id" id = "p_id" style="display:none;" value = "{{post.id}}">    
+                       
+                    <div style="margin-left: 30px;">
+                    {%  if likes[post.id] == 1 %}
+                    <button formaction="{{ url_for('like_post', id=post.id) }}" style="border: 0; background-color: transparent;"><i class="fas fa-heart"></i></button>
+                    {%  else %}
+                    <button formaction="{{ url_for('like_post', id=post.id) }}" style="border: 0; background-color: transparent;"><i class="far fa-heart"></i></button>
+                    {%  endif %}
+                    
+                    {{ post.likes }}
+                    </div>
+                    
+                    <p style="text-align: right; color: darkgray; font-size: 13px;">{{ post.date }}</p> 
+                </form>                
+                
+                {% endfor %}
+            </ul>
+            {% else %}
+            <hr style="border-top: 2px solid #2A3A51">
+            <p style="text-align: center; font-size: 17px;"> Тут поки що немає публікацій.</p>
+          {% endif %} 
+            
+        </div>
+        <style>
+                button:active, button:focus {
+                  outline: none;
+                }
+                button::-moz-focus-inner {
+                  border: 0;
+                }</style>
+    </body>
+</html>

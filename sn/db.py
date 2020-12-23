@@ -37,7 +37,15 @@ class Post(db.Model):
 	title = db.Column(db.String(80), nullable=False)
 	body = db.Column(db.Text, nullable=False)
 	date = db.Column(db.String(80), nullable=False)
-	likes = db.Column(db.Integer)
+	likes = db.Column(db.String(100))
+	is_favorite = db.Column(db.Boolean, default=False)
+
+class Like(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+	user = db.relationship('User',  foreign_keys = "Like.user_id")
+	post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+	post = db.relationship('Post',  foreign_keys = "Like.post_id")
 
 class Post_Image(db.Model):
 	id = db.Column(db.Integer, primary_key=True)

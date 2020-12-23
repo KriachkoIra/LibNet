@@ -130,7 +130,7 @@ def add_post():
 		dn = str(dn)
 		date = dn[8:10] + '.' + dn[5:7] + '.' + dn[0:4] + ' ' + dn[11:13] + ':' + dn[14:16]
 
-		post = Post(author_id=g.user.id, title=title, body=body, date=date)
+		post = Post(author_id=g.user.id, title=title, body=body, date=date, likes='0')
 		db.session.add(post)
 		db.session.commit()
 
@@ -168,9 +168,23 @@ def delete_post(id):
 def my_profile():
 	get_user()
 	n = Post.query.filter_by(author_id=g.user.id).count()
-	f_books = Book.query.filter_by(owner_id=g.user.id).filter_by(is_favorite=True).all()
+	b = Book.query.filter_by(owner_id=g.user.id)
+	books = []
+	for book in b:
+		books.append(book.id)
 
-	return render_template('user_page.html', n_posts=n, books=f_books)
+	f_books = Book.query.filter_by(owner_id=g.user.id).filter_by(is_favorite=True).all()
+	f_posts = Post.query.filter_by(author_id=g.user.id).filter_by(is_favorite=True).all()
+	f_quotes = []
+
+	quotes = Quote.query
+	for q in quotes:
+		if q.book_id in books:
+			if q.is_favorite:
+				f_quotes.append(q)
+
+
+	return render_template('user_page.html', n_posts=n, books=f_books, posts=f_posts, quotes=f_quotes)
 
 @app.route('/upload_image', methods=('GET', 'POST'))
 def upload_image():
@@ -243,3 +257,69 @@ def add_quote_to_favorites(id):
 		return redirect(url_for('book', id=cur_quote.book_id))
 
 	return redirect(url_for('book', id=cur_quote.book_id))
+
+@app.route('/<int:id>/add_post_to_favorites', methods=('GET', 'POST'))
+def add_post_to_favorites(id):
+	get_user()
+
+	if request.method == 'POST':
+		p_id = request.form.get("p_id")
+		print("post id:", p_id)
+
+		cur_post = Post.query.filter_by(id=p_id).first()
+		if cur_post.is_favorite == True:
+			cur_post.is_favorite = False
+		else:
+			cur_post.is_favorite = True
+		db.session.commit()
+		return redirect(url_for('posts'))
+
+	return redirect(url_for('posts'))
+
+@app.route('/blog', methods=('GET', 'POST'))
+def blog():
+	get_user()
+	p = Post.query
+	author = {}
+	photo = {}
+	for a in p:
+		user = User.query.filter_by(id=a.author_id).first()
+		author[a.id] = user.username
+		photo[a.id] = user.avatar
+
+	likes = {}
+	l = Like.query.filter_by(user_id=g.user.id)
+	for a in p:
+		cur_like = l.filter_by(post_id=a.id).first()
+		if cur_like:
+			likes[a.id] = 1
+			print(a.title)
+		else:
+			likes[a.id] = 0
+
+	return render_template('blog.html', posts=p, author=author, photo=photo, likes=likes)
+
+@app.route('/<int:id>/like_post', methods=('GET', 'POST'))
+def like_post(id):
+	get_user()
+
+	if request.method == 'POST':
+		p_id = request.form.get("p_id")
+		print("post id:", p_id)
+
+		cur_post = Post.query.filter_by(id=p_id).first()
+		like = Like.query.filter_by(post_id=p_id).filter_by(user_id=g.user.id).first()
+		n = int(cur_post.likes)
+
+		if like:
+			cur_post.likes = str(n - 1)
+			db.session.delete(like)
+		else:
+			cur_post.likes = str(n + 1)
+			like = Like(user_id=g.user.id, post_id=p_id)
+			db.session.add(like)
+
+		db.session.commit()
+		return redirect(url_for('blog'))
+
+	return redirect(url_for('blog'))

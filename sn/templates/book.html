@@ -91,7 +91,15 @@
             popup.classList.toggle("show");
             }
         </script>
-        
+        <style>
+            .book-button{
+                background-color: transparent;
+                border: 0;
+            } 
+            .book-button:hover{
+                color: grey;
+            }
+        </style>
         
         {% if quotes.first() %}
         <ol class="quotes">
@@ -99,14 +107,20 @@
             <hr>
                 <li class="quote-div"><div id = "quote-text-div">{{ q.text }}</div>
                     <div id="contain" style="display: flex; align-items: center; justify-content: center;">
-                    <div id="min-contain">
-                    <button class="edit-delete-button" ><i class="far fa-edit"></i>
-                    Змінити</button>
-                    <form method="post">
-                    <input name = "q_id" id = "q_id" style="display:none;" value = "{{q.id}}">
-                    <button class="edit-delete-button" formaction="{{ url_for('delete_quote', id=q.book_id) }}"><i class="far fa-trash-alt" style="margin-right: 6px;"></i>Видалити</button>
-                    </form>
-                    </div>
+                        <div id="min-contain">
+                            <form method="post" style="display: flex;">
+                            <input name = "q_id" id = "q_id" style="display:none;" value = "{{q.id}}">
+                            <button class="book-button" formaction="{{ url_for('delete_quote', id=q.book_id) }}"><i class="far fa-trash-alt" style="margin-right: 6px;"></i></button>
+                            <button class="book-button"><i class="far fa-edit"></i></button>
+                            {%  if q.is_favorite %}
+                            <button formaction="{{ url_for('add_quote_to_favorites', id=q.id) }}" style="border: 0; background-color: transparent;"><i class="fas fa-star"></i></button>
+
+                            {%  else %}
+                                
+                            <button formaction="{{ url_for('add_quote_to_favorites', id=q.id) }}" style="border: 0; background-color: transparent;"><i class="far fa-star"></i></button>
+                            {%  endif %}
+                            </form>
+                        </div>
                     </div>
                 </li>
             

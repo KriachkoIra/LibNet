@@ -15,18 +15,40 @@
   </button>
 
   <div  class="collapse navbar-collapse" id="navbarSupportedContent">
+      {% if g.user %}
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="{{ url_for('my_profile') }}">Мій профіль<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{{ url_for('blog') }}">Блог<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ url_for('books') }}">Мої книги</a>
       </li>
+        <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('posts') }}">Мої публікації</a>
+      </li>
     </ul>
+      {% else %}
+      <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('blog') }}">Блог<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Мої книги</a>
+      </li>
+          <li class="nav-item">
+        <a class="nav-link" href="#">Мої публікації</a>
+      </li>
+    </ul>
+      {% endif %} 
       <ul class="navbar-nav">
       {% if g.user %}
         <li class="nav-item">
-        <span class="nav-link">{{ g.user.username }}</span>
+        <a class="nav-link" href="{{ url_for('my_profile') }}" style="height: 40px;"> 
+            {{ g.user.username }} 
+            {% if g.user.avatar %}
+            <img src="{{ g.user.avatar }}" style="height: 40px; margin-top: -8px; margin-left: 5px;">
+            {% endif %} 
+            </a>
         </li>
         <li class="nav-item">
         <a style="color: white" class="nav-link" href="{{ url_for('logout') }}">Вийти</a>

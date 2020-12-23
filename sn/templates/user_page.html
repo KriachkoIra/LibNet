@@ -86,7 +86,7 @@
 <form method="post">
 <div class="row">
     <div class="col-lg-12">
-        <div class="jumbotron text-center" style="background-color: transparent; padding: 0; margin-left: 80px; margin-top: 10px;">
+        <div class="jumbotron text-center" style="background-color: transparent; padding: 0; margin-left: 80px; margin-top: 10px; margin-bottom: 0px;">
             <div class="row">
                 <div class="input-group mt-3">
                     <div class="custom-file">
@@ -158,6 +158,14 @@
         .book:hover{
             text-decoration: none;
         }
+    
+        .book-button{
+            background-color: transparent;
+            border: 0;
+        } 
+        .book-button:hover{
+            color: grey;
+        }
         
     </style>
  
@@ -174,6 +182,9 @@
       </li>
     </ul>
     <div class="tab-content" id="pills-tabContent">
+        
+        <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+        
       <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
         {% if books %}
             <ol class="students" style="list-style: none; padding: 0px;">
@@ -189,11 +200,89 @@
                 {% endfor %}
             </ol>
           {% else %}
+          <hr style="border-top: 2px solid #2A3A51; background-color: transparent; opacity: 1;">
             <div>У Вас поки що немає улюблених книг.</div>
           {% endif %} 
       </div>
-      <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
-      <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
+        
+        <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+        
+      <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+        {% if posts %}
+            <ul class="posts" style="padding: 0px;">
+                {% for post in posts|reverse %}
+                <hr style="border-top: 2px solid #2A3A51; background-color: transparent; opacity: 1;">
+                    <li class="post" style="padding: 0px; list-style: none;">
+                        <div style="display: flex; justify-content: space-between;">
+                        <p><b>{{ post.title }}</b></p>
+                        <form method="post">
+                    <input name = "p_id" id = "p_id" style="display:none;" value = "{{ post.id }}">    
+                            
+                    <button class="edit-delete-button delete-post" formaction="{{ url_for('delete_post', id=post.id) }}" ><i class="far fa-trash-alt" style="margin-right: 6px;"></i>delete</button>
+                            {%  if post.is_favorite %}
+                <button formaction="{{ url_for('add_post_to_favorites', id=post.id) }}" style="border: 0; background-color: transparent;"><i class="fas fa-star"></i></button>
+                    
+                    {%  else %}
+                <button formaction="{{ url_for('add_post_to_favorites', id=post.id) }}" style="border: 0; background-color: transparent;"><i class="far fa-star"></i></button>
+                    {%  endif %}
+                    </form>
+                        </div>
+                    <p style="text-align: justify;">{{ post.body }}</p>
+                    <p style="text-align: right; color: darkgray; font-size: 13px;">{{ post.date }}</p>
+                    </li>
+                
+                <style>
+                button:active, button:focus {
+                  outline: none;
+                }
+                button::-moz-focus-inner {
+                  border: 0;
+                }</style>
+                {% endfor %}
+            </ul>
+          {% else %}
+            <hr style="border-top: 2px solid #2A3A51; background-color: transparent; opacity: 1;">
+            <div>У Вас поки що немає улюблених постів.</div>
+          {% endif %} 
+      </div>
+        </div>
+        
+        <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+        
+    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+        
+    {% if quotes %}
+        <ol class="quotes">
+            {% for q in quotes %}
+            <hr style="border-top: 2px solid #2A3A51; background-color: transparent; opacity: 1;">
+                <li class="quote-div"><div id = "quote-text-div">{{ q.text }}</div>
+                    <div id="contain" style="display: flex; align-items: center; justify-content: center;">
+                        <div id="min-contain">
+                            <form method="post" style="display: flex;">
+                            <input name = "q_id" id = "q_id" style="display:none;" value = "{{q.id}}">
+                            <button class="book-button" formaction="{{ url_for('delete_quote', id=q.book_id) }}"><i class="far fa-trash-alt" style="margin-right: 6px;"></i></button>
+                            <button class="book-button"><i class="far fa-edit"></i></button>
+                            {%  if q.is_favorite %}
+                            <button formaction="{{ url_for('add_quote_to_favorites', id=q.id) }}" style="border: 0; background-color: transparent;"><i class="fas fa-star"></i></button>
+
+                            {%  else %}
+                                
+                            <button formaction="{{ url_for('add_quote_to_favorites', id=q.id) }}" style="border: 0; background-color: transparent;"><i class="far fa-star"></i></button>
+                            {%  endif %}
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            
+            {% endfor %}
+        </ol>
+        {% else %}
+            <hr style="border-top: 2px solid #2A3A51; background-color: transparent; opacity: 1;">
+            <p>Ви поки що не додавали цитати.</p>
+        {% endif %}    
+        
+        </div>
     </div>       
 </div>
   </div>      
@@ -266,13 +355,7 @@ function ajaxFormPost(formData, actionURL){
                     $('#uploaded-image').attr('src', response['url']);
                 },function(){
                 });
-            } else {
-                swal({
-                    title:'Failed!',
-                    text: response['message'],
-                    type:'error'
-                });
-            }
+            } 
         },
         complete: function(){
         }

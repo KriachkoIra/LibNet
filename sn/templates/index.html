@@ -23,11 +23,12 @@
             .main-page-div{
                 padding: 50px;
                 background-color: white;
-                width: 500px;
+                width: 510px;
                 margin: auto;
                 height: 400px;
-                margin-top: 20vh;
+                margin-top: 19vh;
                 border-radius: 40px;
+                border: 4px solid;
             }
             
             .flex-contain{
@@ -37,13 +38,12 @@
             }
             </style>
         
-        
         <div class="main-page-div">
             <p style="font-size: 30px; font-weight: 700; text-align: center;">LibNet</p>
             <p style="font-size: 20px; font-weight: 500; text-align: center; margin-top: -15px; color: grey;">Літературна соціальна мережа</p>
+            <hr style="width: 300px; border-top: 2px solid black">
             <div class="flex-contain">
-        
-                <div style="margin-top: 70px; text-align: center;">
+                <div style="margin-top: 50px; text-align: center;">
         <i class="fas fa-book" style="font-size: 50px; margin-bottom: 15px;"></i>
         {% if g.user %}
         <form class="add-class-button" >
@@ -60,7 +60,7 @@
         {% endif %}
            </div> 
                 
-        <div style="margin-top: 70px; text-align: center;">
+        <div style="margin-top: 50px; text-align: center;">
             <i class="fas fa-mail-bulk" style="font-size: 50px; margin-bottom: 15px;"></i>
         {% if g.user %}
             
@@ -77,6 +77,7 @@
         </div>
         </div>
         </div>
+            </div>
         
         <script>
             function myFunction() {
