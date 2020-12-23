@@ -62,11 +62,15 @@
     
 </style>
 
-{% if g.user.avatar %}
+
 <div style="max-width: 100%;">
 <div class="user-photo">
-  <img class="user-avatar"  src="{{ g.user.avatar }}" >
-  <p style="margin: auto; text-align: center; font-size: 24px; font-weight: 500;">{{ g.user.username }} <!--<i class="fa fa-pencil" style="font-size: 14px; color: darkgrey; margin-left: 3px;"></i> --> </p> 
+    {% if user.avatar %}
+  <img class="user-avatar"  src="{{ user.avatar }}" >
+   {% else %}
+    <i class="far fa-user-circle"></i>         
+    {% endif %}  
+  <p style="margin: auto; text-align: center; font-size: 24px; font-weight: 500;">{{ user.username }} <!--<i class="fa fa-pencil" style="font-size: 14px; color: darkgrey; margin-left: 3px;"></i> --> </p> 
     <hr style="margin-top: 3px;">
     <div class="info">
         <div class="stat">
@@ -79,52 +83,7 @@
         </div>
     </div>
 </div>
-{% else %}
-    
-     
-<!--This is for taking picture input form user -->
-<form method="post">
-<div class="row">
-    <div class="col-lg-12">
-        <div class="jumbotron text-center" style="background-color: transparent; padding: 0; margin-left: 80px; margin-top: 10px; margin-bottom: 0px;">
-            <div class="row">
-                <div class="input-group mt-3">
-                    <div class="custom-file">
-                        <p style="margin-right: 10px; font-size: 18px; font-weight: 500; padding-top: 10px;">Створіть аватарку: </p>
-                        <input type="file" accept="image/*" id="cover_image">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal" tabindex="-1" role="dialog" id="uploadimageModal">
-    <div class="modal-dialog" role="document" style="min-width: 700px">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Створіть аватарку</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <div id="image_demo"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary crop_image submit-button">Зберегти</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
-            </div>
-        </div>
-    </div>
-</div>
-</form> 
-        
-{% endif %}            
+           
         
         
  <!-- ||||||||||||||||||||||||||||||||||||||||||||| -->       
@@ -189,7 +148,7 @@
         {% if books %}
             <ol class="students" style="list-style: none; padding: 0px;">
                 {% for book in books %}
-                    <li class="li-book"><a class="book"  href="{{ url_for('book', id=book.id) }}">
+                    <li class="li-book"><a class="book"  href="#">
                         {% if book.image %}
                         <img class="book-img"  src="{{ book.image }}">
                         {% else %}
@@ -201,7 +160,7 @@
             </ol>
           {% else %}
           <hr style="border-top: 2px solid #2A3A51; background-color: transparent; opacity: 1;">
-            <div>У Вас поки що немає улюблених книг.</div>
+            <div>У {{ user.username }} поки що немає улюблених книг.</div>
           {% endif %} 
       </div>
         
@@ -214,20 +173,7 @@
                 {% for post in posts|reverse %}
                 <hr style="border-top: 2px solid #2A3A51; background-color: transparent; opacity: 1;">
                     <li class="post" style="padding: 0px; list-style: none;">
-                        <div style="display: flex; justify-content: space-between;">
-                        <p><b>{{ post.title }}</b></p>
-                        <form method="post">
-                    <input name = "p_id" id = "p_id" style="display:none;" value = "{{ post.id }}">    
-                            
-                    <button class="edit-delete-button delete-post" formaction="{{ url_for('delete_post', id=post.id) }}" ><i class="far fa-trash-alt" style="margin-right: 6px;"></i>delete</button>
-                            {%  if post.is_favorite %}
-                <button formaction="{{ url_for('add_post_to_favorites', id=post.id) }}" style="border: 0; background-color: transparent;"><i class="fas fa-star"></i></button>
-                    
-                    {%  else %}
-                <button formaction="{{ url_for('add_post_to_favorites', id=post.id) }}" style="border: 0; background-color: transparent;"><i class="far fa-star"></i></button>
-                    {%  endif %}
-                    </form>
-                        </div>
+                    <p><b>{{ post.title }}</b></p>
                     <p style="text-align: justify;">{{ post.body }}</p>
                     <p style="text-align: right; color: darkgray; font-size: 13px;">{{ post.date }}</p>
                     </li>
@@ -243,7 +189,7 @@
             </ul>
           {% else %}
             <hr style="border-top: 2px solid #2A3A51; background-color: transparent; opacity: 1;">
-            <div>У Вас поки що немає улюблених постів.</div>
+            <div>У {{ user.username }} поки що немає улюблених постів.</div>
           {% endif %} 
       </div>
         </div>
@@ -258,20 +204,6 @@
             <hr style="border-top: 2px solid #2A3A51; background-color: transparent; opacity: 1;">
                 <li class="quote-div"><div id = "quote-text-div">{{ q.text }}</div>
                     <div id="contain" style="display: flex; align-items: center; justify-content: center;">
-                        <div id="min-contain">
-                            <form method="post" style="display: flex;">
-                            <input name = "q_id" id = "q_id" style="display:none;" value = "{{q.id}}">
-                            <button class="book-button" formaction="{{ url_for('delete_quote', id=q.book_id) }}"><i class="far fa-trash-alt" style="margin-right: 6px;"></i></button>
-                            <button class="book-button"><i class="far fa-edit"></i></button>
-                            {%  if q.is_favorite %}
-                            <button formaction="{{ url_for('add_quote_to_favorites', id=q.id) }}" style="border: 0; background-color: transparent;"><i class="fas fa-star"></i></button>
-
-                            {%  else %}
-                                
-                            <button formaction="{{ url_for('add_quote_to_favorites', id=q.id) }}" style="border: 0; background-color: transparent;"><i class="far fa-star"></i></button>
-                            {%  endif %}
-                            </form>
-                        </div>
                     </div>
                 </li>
             
@@ -279,7 +211,7 @@
         </ol>
         {% else %}
             <hr style="border-top: 2px solid #2A3A51; background-color: transparent; opacity: 1;">
-            <p>У Вас поки що немає улюблених цитат.</p>
+            <p>У {{ user.username }} поки що немає улюблених цитат.</p>
         {% endif %}    
         
         </div>
@@ -294,74 +226,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-<script>
-var image_crop = $('#image_demo').croppie({
-    viewport: {
-        width: 300,
-        height: 300,
-        type:'circle'
-    },
-    boundary:{
-        width: 650,
-        height: 350
-    }
-});
-/// catching up the cover_image change event and binding the image into my croppie. Then show the modal.
-$('#cover_image').on('change', function(){
-    var reader = new FileReader();
-    reader.onload = function (event) {
-        image_crop.croppie('bind', {
-            url: event.target.result,
-        });
-    }
-    reader.readAsDataURL(this.files[0]);
-    $('#uploadimageModal').modal('show');
-});
-    
-    /// Get button click event and get the current crop image
-$('.crop_image').click(function(event){
-    var formData = new FormData();
-    image_crop.croppie('result', {type: 'blob', format: 'png'}).then(function(blob) {
-        formData.append('cropped_image', blob);
-        ajaxFormPost(formData, '/upload_image'); /// Calling my ajax function with my blob data passed to it
-    });
-    $('#uploadimageModal').modal('hide');
-});
-/// Ajax Function
-function ajaxFormPost(formData, actionURL){
-    $.ajax({
-        url: actionURL,
-        type: 'POST',
-        data: formData,
-        cache: false,
-        async: true,
-        processData: false,
-        contentType: false,
-        timeout: 5000,
-        beforeSend: function(){
-        },
-        success: function(response) {
-            if (response['status'] === 'success') {
-///Some Fancy UI, that you won't probably need
-                swal({
-                    title:'Success!',
-                    text: response['message'],
-                    type:'success',
-                    timer:2000
-                }).then(function() {
-/// But this part you may need, reset the input value and put the cropped image inside my image attribute.
-                    $('#cover_image').val("");
-                    $('#uploaded-image').attr('src', response['url']);
-                },function(){
-                });
-            } 
-        },
-        complete: function(){
-        }
-    });
-}
-</script>
         
     </body>
 </html>

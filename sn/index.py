@@ -282,9 +282,11 @@ def blog():
 	p = Post.query
 	author = {}
 	photo = {}
+	author_id = {}
 	for a in p:
 		user = User.query.filter_by(id=a.author_id).first()
 		author[a.id] = user.username
+		author_id[a.id] = user.id
 		photo[a.id] = user.avatar
 
 	likes = {}
@@ -297,7 +299,7 @@ def blog():
 		else:
 			likes[a.id] = 0
 
-	return render_template('blog.html', posts=p, author=author, photo=photo, likes=likes)
+	return render_template('blog.html', posts=p, author=author, photo=photo, likes=likes, author_id=author_id)
 
 @app.route('/<int:id>/like_post', methods=('GET', 'POST'))
 def like_post(id):
@@ -323,3 +325,28 @@ def like_post(id):
 		return redirect(url_for('blog'))
 
 	return redirect(url_for('blog'))
+
+@app.route('/<int:id>/other_users_page', methods=('GET', 'POST'))
+def other_users_page(id):
+	get_user()
+
+	u_id = request.form.get("u_id")
+	print(u_id)
+	user = User.query.filter_by(id=u_id).first()
+	n = Post.query.filter_by(author_id=user.id).count()
+	b = Book.query.filter_by(owner_id=user.id)
+	books = []
+	for book in b:
+		books.append(book.id)
+
+	f_books = Book.query.filter_by(owner_id=user.id).filter_by(is_favorite=True).all()
+	f_posts = Post.query.filter_by(author_id=user.id).filter_by(is_favorite=True).all()
+	f_quotes = []
+
+	quotes = Quote.query
+	for q in quotes:
+		if q.book_id in books:
+			if q.is_favorite:
+				f_quotes.append(q)
+	
+	return render_template('other_users_page.html', user=user ,n_posts=n, books=f_books, posts=f_posts, quotes=f_quotes)

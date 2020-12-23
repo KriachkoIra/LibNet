@@ -38,7 +38,7 @@
                         <form method="post">
                     <input name = "p_id" id = "p_id" style="display:none;" value = "{{post.id}}">    
                             
-                    <button class="edit-delete-button delete-post" formaction="{{ url_for('delete_post', id=post.id) }}" ><i class="far fa-trash-alt" style="margin-right: 6px;"></i>delete</button>
+                    <button class="edit-delete-button delete-post" formaction="{{ url_for('delete_post', id=post.id) }}" ><i class="far fa-trash-alt" style="margin-right: -70px;"></i></button>
                             {%  if post.is_favorite %}
                 <button formaction="{{ url_for('add_post_to_favorites', id=post.id) }}" style="border: 0; background-color: transparent;"><i class="fas fa-star"></i></button>
                     
