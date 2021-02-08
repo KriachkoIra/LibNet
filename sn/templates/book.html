@@ -57,7 +57,7 @@
                     {%  else %}
                 <button formaction="{{ url_for('add_book_to_favorites', id=book.id) }}" style="border: 0; background-color: transparent;"><i class="far fa-star"></i></button>
                     {%  endif %}
-                    <a style="margin-right: 10px;"><i class="far fa-edit"></i></a>
+                    <!--<a style="margin-right: 10px;"><i class="far fa-edit"></i></a>-->
                 <button formaction="{{ url_for('delete_book', id=book.id) }}" style="border: 0; background-color: transparent;"><i class="far fa-trash-alt"></i></button>
                 </form>
             </div>  
@@ -111,7 +111,7 @@
                             <form method="post" style="display: flex;">
                             <input name = "q_id" id = "q_id" style="display:none;" value = "{{q.id}}">
                             <button class="book-button" formaction="{{ url_for('delete_quote', id=q.book_id) }}"><i class="far fa-trash-alt" style="margin-right: 6px;"></i></button>
-                            <button class="book-button"><i class="far fa-edit"></i></button>
+                            <!--<button class="book-button"><i class="far fa-edit"></i></button>-->
                             {%  if q.is_favorite %}
                             <button formaction="{{ url_for('add_quote_to_favorites', id=q.id) }}" style="border: 0; background-color: transparent;"><i class="fas fa-star"></i></button>
 

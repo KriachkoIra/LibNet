@@ -47,6 +47,13 @@ class Like(db.Model):
 	post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
 	post = db.relationship('Post',  foreign_keys = "Like.post_id")
 
+class Subscribe(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+	user = db.relationship('User',  foreign_keys = "Subscribe.user_id")
+	sub_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+	sub = db.relationship('User',  foreign_keys = "Subscribe.sub_id")
+
 class Post_Image(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)

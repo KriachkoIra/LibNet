@@ -283,8 +283,14 @@ def blog():
 	author = {}
 	photo = {}
 	author_id = {}
+	active_sub = {}
 	for a in p:
 		user = User.query.filter_by(id=a.author_id).first()
+		sub = Subscribe.query.filter_by(sub_id=user.id).filter_by(user_id=g.user.id).first()
+		active_sub[a.id] = 0
+		if sub:
+			active_sub[a.id] = 1
+
 		author[a.id] = user.username
 		author_id[a.id] = user.id
 		photo[a.id] = user.avatar
@@ -299,7 +305,7 @@ def blog():
 		else:
 			likes[a.id] = 0
 
-	return render_template('blog.html', posts=p, author=author, photo=photo, likes=likes, author_id=author_id)
+	return render_template('blog.html', posts=p, author=author, photo=photo, likes=likes, author_id=author_id, sub=active_sub)
 
 @app.route('/<int:id>/like_post', methods=('GET', 'POST'))
 def like_post(id):
@@ -330,7 +336,7 @@ def like_post(id):
 def other_users_page(id):
 	get_user()
 
-	u_id = request.form.get("u_id")
+	u_id = id
 	print(u_id)
 	user = User.query.filter_by(id=u_id).first()
 	n = Post.query.filter_by(author_id=user.id).count()
@@ -338,6 +344,9 @@ def other_users_page(id):
 	books = []
 	for book in b:
 		books.append(book.id)
+
+	subs = Subscribe.query.filter_by(sub_id=u_id).count()
+	print("subs:", subs)
 
 	f_books = Book.query.filter_by(owner_id=user.id).filter_by(is_favorite=True).all()
 	f_posts = Post.query.filter_by(author_id=user.id).filter_by(is_favorite=True).all()
@@ -348,5 +357,33 @@ def other_users_page(id):
 		if q.book_id in books:
 			if q.is_favorite:
 				f_quotes.append(q)
+
+	sub = Subscribe.query.filter_by(sub_id=u_id).filter_by(user_id=g.user.id).first()
+	active_sub = 0
+	if sub:
+		active_sub = 1
 	
-	return render_template('other_users_page.html', user=user ,n_posts=n, books=f_books, posts=f_posts, quotes=f_quotes)
+	return render_template('other_users_page.html', user=user, n_posts=n, books=f_books, posts=f_posts, quotes=f_quotes, active_sub=active_sub, subs=subs)
+
+
+@app.route('/<int:id>/subscribe', methods=('GET', 'POST'))
+def subscribe(id):
+	get_user()
+
+	if request.method == 'POST':
+		u_id = request.form.get("u_id")
+		print("post id:", u_id, "hi")
+
+		cur_user = User.query.filter_by(id=u_id).first()
+		sub = Subscribe.query.filter_by(sub_id=u_id).filter_by(user_id=g.user.id).first()
+
+		if sub:
+			db.session.delete(sub)
+		else:
+			sub = Subscribe(user_id=g.user.id, sub_id=u_id)
+			db.session.add(sub)
+
+		db.session.commit()
+		return redirect(url_for('other_users_page', id=u_id))
+
+	return redirect(url_for('other_users_page', id=u_id))

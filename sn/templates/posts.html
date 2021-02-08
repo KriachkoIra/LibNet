@@ -35,10 +35,10 @@
                     <li class="post" style="padding: 0px; list-style: none;">
                         <div style="display: flex; justify-content: space-between;">
                         <p><b>{{ post.title }}</b></p>
-                        <form method="post">
+                        <form method="post" style="min-width: 60px;">
                     <input name = "p_id" id = "p_id" style="display:none;" value = "{{post.id}}">    
                             
-                    <button class="edit-delete-button delete-post" formaction="{{ url_for('delete_post', id=post.id) }}" ><i class="far fa-trash-alt" style="margin-right: -70px;"></i></button>
+                    <button class="edit-delete-button delete-post" style="width: 20px;" formaction="{{ url_for('delete_post', id=post.id) }}" ><i class="far fa-trash-alt"></i></button>
                             {%  if post.is_favorite %}
                 <button formaction="{{ url_for('add_post_to_favorites', id=post.id) }}" style="border: 0; background-color: transparent;"><i class="fas fa-star"></i></button>
                     

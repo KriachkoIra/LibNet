@@ -79,10 +79,26 @@
           </div>
         <div class="stat">
             <div class="label">Підписники</div>
-            <div class="num">0</div>
+            <div class="num">{{ subs }}</div>
         </div>
     </div>
-    <button style="margin-left: 30px; margin-top: 10px; background: none; border: 0;"><i class="fas fa-user-plus" style="margin-right: 4px;"></i> Підписатися</button>
+    <hr style="margin-top: 10px;">
+    <div style="text-align: center;">
+      <p>{{ user.name }}</p>
+      <p>{{ user.email }}</p>
+    </div>
+    <hr style="margin-top: -3px;">
+    <form method="post" style="display: flex; justify-content: space-between; margin: auto;">
+        
+    <input name = "u_id" id = "u_id" style="display:none;" value = "{{user.id}}">
+    {%  if user.id != g.user.id %}
+    {%  if active_sub == 1 %}
+    <button formaction="{{ url_for('subscribe', id=user.id) }}" style="margin-left: 10px;  background: none; border: 0;"><i class="fas fa-user-minus" style="margin-right: 4px;" ></i> Скасувати підписку</button>
+    {%  else %}
+    <button formaction="{{ url_for('subscribe', id=user.id) }}" style="margin-left: 30px;  background: none; border: 0;"><i class="fas fa-user-plus" style="margin-right: 4px;" ></i> Підписатися</button>
+    {%  endif %}
+    {%  endif %}
+        </form> 
 </div>
            
         

@@ -32,6 +32,7 @@
           {% if posts.first() %}
             <ul class="posts" style="padding: 0px;">
                 {% for post in posts|reverse %}
+                {% if sub[post.id] == 1 %}
                 <hr style="border-top: 2px solid #2A3A51; margin-top: 0">
                     <li class="post" style="padding: 0px; list-style: none;">
                         <div style="margin-right: 30px; text-align: center; width: 96px; display: block;">
@@ -72,7 +73,51 @@
                     
                     <p style="text-align: right; color: darkgray; font-size: 13px;">{{ post.date }}</p> 
                 </form>                
+                {%  endif %}
+                {% endfor %}
+                {% for post in posts|reverse %}
+                {% if sub[post.id] == 0 %}
+                <hr style="border-top: 2px solid #2A3A51; margin-top: 0">
+                    <li class="post" style="padding: 0px; list-style: none;">
+                        <div style="margin-right: 30px; text-align: center; width: 96px; display: block;">
+                            {% if photo[post.id] %}
+                        <img src="{{ photo[post.id] }}" style="height: 70px; display: inline-block;">
+                            {%  else %}
+                            <i class="far fa-user-circle" style="text-align: center; font-size: 30px; margin: auto;"></i>
+                            {%  endif %}
+                        <form method="post">
+                        <input name = "u_id" id = "u_id" style="display: none;" value = "{{ author_id[post.id] }}">
+                            <button class="user-button" formaction="{{ url_for('other_users_page', id=author_id[post.id]) }}" style="border: 0; background-color: transparent;">{{ author[post.id] }}</button>
+                        </form>
+                            </div>
+                        <div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <p><b>{{ post.title }}</b></p>
+                            <form method="post">
+                                <input name = "p_id" id = "p_id" style="display:none;" value = "{{post.id}}">    
+                            </form>
+                        </div>
+                    <p style="text-align: justify;">{{ post.body }}</p>
+                    
+                        </div>
+                    </li>
                 
+                <form method="post" style="display: flex; justify-content: space-between;">
+                    <input name = "p_id" id = "p_id" style="display:none;" value = "{{post.id}}">    
+                       
+                    <div style="margin-left: 30px;">
+                    {%  if likes[post.id] == 1 %}
+                    <button formaction="{{ url_for('like_post', id=post.id) }}" style="border: 0; background-color: transparent;"><i class="fas fa-heart"></i></button>
+                    {%  else %}
+                    <button formaction="{{ url_for('like_post', id=post.id) }}" style="border: 0; background-color: transparent;"><i class="far fa-heart"></i></button>
+                    {%  endif %}
+                    
+                    {{ post.likes }}
+                    </div>
+                    
+                    <p style="text-align: right; color: darkgray; font-size: 13px;">{{ post.date }}</p> 
+                </form>                
+                {%  endif %}
                 {% endfor %}
             </ul>
             {% else %}

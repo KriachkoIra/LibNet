@@ -91,7 +91,35 @@
                 <div class="input-group mt-3">
                     <div class="custom-file">
                         <p style="margin-right: 10px; font-size: 18px; font-weight: 500; padding-top: 10px;">Створіть аватарку: </p>
-                        <input type="file" accept="image/*" id="cover_image">
+                        <input type="file" accept="image/*" id="cover_image" hidden>
+                        <label for="cover_image">Обрати файл</label>
+                        <span id="file-chosen">Файл не обрано.</span>
+                        <style>
+                        label {
+                          width: 130px;
+                            height: 37px;
+                            border-radius: 7px;
+                            background-color: #2A3A51;
+                            color: white;
+                            padding-top: 4px;
+                        }
+                            
+                        #file-chosen{
+                          margin-left: 7px;
+                            margin-top: -2px;
+                          font-family: sans-serif;
+                        }
+                        </style>
+                        
+                        <script>
+                        const actualBtn = document.getElementById('cover_image');
+
+                        const fileChosen = document.getElementById('file-chosen');
+
+                        actualBtn.addEventListener('change', function(){
+                          fileChosen.textContent = this.files[0].name
+                        })
+                        </script>
                     </div>
                 </div>
             </div>
@@ -262,7 +290,7 @@
                             <form method="post" style="display: flex;">
                             <input name = "q_id" id = "q_id" style="display:none;" value = "{{q.id}}">
                             <button class="book-button" formaction="{{ url_for('delete_quote', id=q.book_id) }}"><i class="far fa-trash-alt" style="margin-right: 6px;"></i></button>
-                            <button class="book-button"><i class="far fa-edit"></i></button>
+                            <!-- <button class="book-button"><i class="far fa-edit"></i></button> -->
                             {%  if q.is_favorite %}
                             <button formaction="{{ url_for('add_quote_to_favorites', id=q.id) }}" style="border: 0; background-color: transparent;"><i class="fas fa-star"></i></button>
 
